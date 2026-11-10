@@ -45,10 +45,10 @@ xgb_model = xgb.XGBClassifier(scale_pos_weight=class_weight, random_state=42)
 param_grid = {
     'xgbclassifier__n_estimators': [50, 100],        # Number of boosting trees. More trees can improve performance but increase training time.
     'xgbclassifier__max_depth': [2, 3],           # Maximum depth of each tree. Higher values increase model complexity and risk of overfitting.
-    'xgbclassifier__colsample_bytree': [0.5, 0.6],    # Fraction of features sampled when building each tree.
-    'xgbclassifier__colsample_bylevel': [0.5, 0.6],   # Fraction of features sampled at each tree level.
+    'xgbclassifier__colsample_bytree': [0.4, 0.5],    # Fraction of features sampled when building each tree.
+    'xgbclassifier__colsample_bylevel': [0.4, 0.5],   # Fraction of features sampled at each tree level.
     'xgbclassifier__learning_rate': [0.05, 0.1],       # Step size used during boosting. Smaller values may improve generalization but require more trees.
-    'xgbclassifier__reg_lambda': [0.5, 0.6],          # L2 regularization strength. Higher values help reduce overfitting.
+    'xgbclassifier__reg_lambda': [0.4, 0.5],          # L2 regularization strength. Higher values help reduce overfitting.
 }
 # Model pipeline
 model_pipeline = make_pipeline(preprocessor, xgb_model)   # complete the code to build the model pipeline by chaining preprocessor and xgb_model

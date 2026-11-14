@@ -11,8 +11,8 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 import joblib
 import mlflow
 
-mlflow.set_tracking_uri("http://localhost:5000")   # complete the code to set the MLflow tracking URI
-mlflow.set_experiment("tourism-training-experiment")     # complete the code to set the MLflow experiment name (same as the dev experimentation cell)
+mlflow.set_tracking_uri("http://localhost:5000")   # set the MLflow tracking URI
+mlflow.set_experiment("tourism-training-experiment")     # set the MLflow experiment name (same as the dev experimentation cell)
 
 # Xtrain/Xtest/ytrain/ytest are downloaded from the previous job's artifact
 Xtrain = pd.read_csv("Xtrain.csv")
@@ -24,10 +24,10 @@ numeric_features = ["Age", "CityTier",
     "DurationOfPitch", "NumberOfPersonVisiting",
     "NumberOfFollowups","PreferredPropertyStar",
      "NumberOfTrips", "Passport", "PitchSatisfactionScore",
-    "OwnCar", "NumberOfChildrenVisiting", "MonthlyIncome"]    # complete the code to list all numerical feature names (same as in prep.py)
+    "OwnCar", "NumberOfChildrenVisiting", "MonthlyIncome"]    # list all numerical feature names (same as in prep.py)
 
 categorical_features = ["TypeofContact", "Occupation", "Gender",
-                        "ProductPitched", "MaritalStatus", "Designation"]   # complete the code to list all categorical feature names (same as in prep.py)
+                        "ProductPitched", "MaritalStatus", "Designation"]   # list all categorical feature names (same as in prep.py)
 
 # Set the class weight to handle class imbalance
 class_weight = ytrain.value_counts()[0] / ytrain.value_counts()[1]
@@ -45,13 +45,13 @@ xgb_model = xgb.XGBClassifier(scale_pos_weight=class_weight, random_state=42)
 param_grid = {
     'xgbclassifier__n_estimators': [50, 100],        # Number of boosting trees. More trees can improve performance but increase training time.
     'xgbclassifier__max_depth': [2, 3],           # Maximum depth of each tree. Higher values increase model complexity and risk of overfitting.
-    'xgbclassifier__colsample_bytree': [0.4, 0.5],    # Fraction of features sampled when building each tree.
-    'xgbclassifier__colsample_bylevel': [0.4, 0.5],   # Fraction of features sampled at each tree level.
+    'xgbclassifier__colsample_bytree': [0.4, 0.6],    # Fraction of features sampled when building each tree.
+    'xgbclassifier__colsample_bylevel': [0.4, 0.6],   # Fraction of features sampled at each tree level.
     'xgbclassifier__learning_rate': [0.05, 0.1],       # Step size used during boosting. Smaller values may improve generalization but require more trees.
-    'xgbclassifier__reg_lambda': [0.4, 0.5],          # L2 regularization strength. Higher values help reduce overfitting.
+    'xgbclassifier__reg_lambda': [0.4, 0.6],          # L2 regularization strength. Higher values help reduce overfitting.
 }
 # Model pipeline
-model_pipeline = make_pipeline(preprocessor, xgb_model)   # complete the code to build the model pipeline by chaining preprocessor and xgb_model
+model_pipeline = make_pipeline(preprocessor, xgb_model)   # build the model pipeline by chaining preprocessor and xgb_model
 
 # Start MLflow run
 with mlflow.start_run():
